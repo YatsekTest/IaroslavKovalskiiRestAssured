@@ -1,0 +1,26 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+.idea/
+.allure
+
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Other files
+*.log
+target
+*.iml
+.idea
+etc.
+out/
+.idea/*.iml
+*.ipr
+allure-results
+
