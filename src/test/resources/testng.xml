@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Trello tests">
+        <test name="Trello tests">
+            <classes>
+                <class name="TrelloBoardTest"/>
+                <class name="TrelloListTest"/>
+                <class name="TrelloCardTest"/>
+            </classes>
+        </test>
+</suite>

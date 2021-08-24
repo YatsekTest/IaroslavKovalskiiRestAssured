@@ -6,7 +6,11 @@ public enum Tags {
     DESCRIPTION("desc"),
     CLOSED("closed"),
     KEY("key"),
-    TOKEN("token");
+    API_KEY("apiKey"),
+    TOKEN("token"),
+    ID_BOARD("idBoard"),
+    SUBSCRIBED("subscribed"),
+    ID_LIST("idList");
 
     public String tag;
 

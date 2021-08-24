@@ -11,43 +11,43 @@ import java.util.Map;
 
 import static constants.Tags.*;
 
-public class TrelloBoardObject extends TrelloBaseObject {
+public class TrelloBoardServiceObject extends TrelloBaseServiceObject {
 
-    private TrelloBoardObject(Method requestMethod, Map<String, String> parameters, Map<String, String> path) {
+    private TrelloBoardServiceObject(Method requestMethod, Map<String, String> parameters, Map<String, String> path) {
         super(requestMethod, parameters, path);
     }
 
-    public static ApiRequestBuilder requestBuilderBoard() {
-        return new ApiRequestBuilder();
+    public static boardRequestBuilder boardRequestBuilder() {
+        return new boardRequestBuilder();
     }
 
-    public static class ApiRequestBuilder {
+    public static class boardRequestBuilder {
         private Map<String, String> parameters = new HashMap<>();
         private Map<String, String> path = new HashMap<>();
         private Method requestMethod = Method.GET;
 
-        public ApiRequestBuilder setMethod(Method method) {
+        public boardRequestBuilder setMethod(Method method) {
             requestMethod = method;
             return this;
         }
 
-        public ApiRequestBuilder setId(String boardId) {
+        public boardRequestBuilder setId(String boardId) {
             parameters.put(ID.tag, boardId);
             return this;
         }
 
-        public ApiRequestBuilder setName(String name) {
+        public boardRequestBuilder setName(String name) {
             parameters.put(NAME.tag, name);
             return this;
         }
 
-        public ApiRequestBuilder setDescription(String description) {
+        public boardRequestBuilder setDescription(String description) {
             parameters.put(DESCRIPTION.tag, description);
             return this;
         }
 
-        public TrelloBoardObject buildRequest() {
-            return new TrelloBoardObject(requestMethod, parameters, path);
+        public TrelloBoardServiceObject buildRequest() {
+            return new TrelloBoardServiceObject(requestMethod, parameters, path);
         }
     }
 
