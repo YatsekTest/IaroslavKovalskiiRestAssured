@@ -11,7 +11,7 @@ import testData.DataFromPropertiesFile;
 import java.util.Map;
 
 import static constants.DataFilePath.AUTH_DATA_FILE_PATH;
-import static constants.Endpoints.*;
+import static constants.Endpoints.BASE_URL;
 import static constants.Tags.*;
 
 public class TrelloBaseServiceObject {
@@ -20,17 +20,22 @@ public class TrelloBaseServiceObject {
     protected Map<String, String> parameters;
     protected Map<String, String> path;
 
-    public TrelloBaseServiceObject(Method requestMethod, Map<String, String> parameters, Map<String, String> path) {
+    public TrelloBaseServiceObject(Method requestMethod,
+                                   Map<String, String> parameters,
+                                   Map<String, String> path) {
         this.requestMethod = requestMethod;
         this.parameters = parameters;
         this.path = path;
     }
 
     public Response sendRequest(String endpoint) {
-        parameters.put(KEY.tag, DataFromPropertiesFile.getData(AUTH_DATA_FILE_PATH).getProperty(API_KEY.tag));
-        parameters.put(TOKEN.tag, DataFromPropertiesFile.getData(AUTH_DATA_FILE_PATH).getProperty(TOKEN.tag));
+        parameters.put(KEY.tag,
+                DataFromPropertiesFile.getData(AUTH_DATA_FILE_PATH).getProperty(API_KEY.tag));
+        parameters.put(TOKEN.tag,
+                DataFromPropertiesFile.getData(AUTH_DATA_FILE_PATH).getProperty(TOKEN.tag));
         return RestAssured
-                .given(requestSpecification()).log().all()
+                .given(requestSpecification())
+                .log().all()
                 .pathParams(path)
                 .queryParams(parameters)
                 .request(requestMethod, endpoint)

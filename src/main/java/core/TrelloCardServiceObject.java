@@ -1,7 +1,6 @@
 package core;
 
 import beans.TrelloCard;
-import beans.TrelloList;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import constants.Endpoints;
@@ -11,11 +10,10 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static constants.Tags.*;
-import static constants.Tags.ID;
+import static org.hamcrest.Matchers.lessThan;
 
 public class TrelloCardServiceObject extends TrelloBaseServiceObject {
 
@@ -77,13 +75,13 @@ public class TrelloCardServiceObject extends TrelloBaseServiceObject {
         }
     }
 
-    public static TrelloCard getTrelloCard(Response response) {
+    public static TrelloCard getTrelloCardFromResponse(Response response) {
         return new Gson().fromJson(response.asString().trim(), new TypeToken<TrelloCard>() {
         }.getType());
     }
 
     public static TrelloCard createDefaultCard(String idBoard, String idList) {
-        return getTrelloCard(cardRequestBuilder()
+        return getTrelloCardFromResponse(cardRequestBuilder()
                 .setMethod(Method.POST)
                 .setIdBoard(idBoard)
                 .setIdList(idList)
@@ -96,6 +94,7 @@ public class TrelloCardServiceObject extends TrelloBaseServiceObject {
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_OK)
+                .time(lessThan(5000L))
                 .extract()
                 .response());
     }

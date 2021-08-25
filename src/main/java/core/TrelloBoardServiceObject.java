@@ -3,13 +3,17 @@ package core;
 import beans.TrelloBoard;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import constants.Endpoints;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.http.HttpStatus;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static constants.Tags.*;
+import static org.hamcrest.Matchers.lessThan;
 
 public class TrelloBoardServiceObject extends TrelloBaseServiceObject {
 
@@ -51,9 +55,24 @@ public class TrelloBoardServiceObject extends TrelloBaseServiceObject {
         }
     }
 
-    public static TrelloBoard getBoard(Response response) {
+    public static TrelloBoard getTrelloBoardFromResponse(Response response) {
         return new Gson().fromJson(response.asString().trim(), new TypeToken<TrelloBoard>() {
         }.getType());
+    }
+
+    public static TrelloBoard createDefaultBoard() {
+        return getTrelloBoardFromResponse(TrelloBoardServiceObject
+                .boardRequestBuilder()
+                .setMethod(Method.POST)
+                .setName(RandomStringUtils.randomAlphabetic(3, 7))
+                .buildRequest()
+                .sendRequest(Endpoints.BOARDS)
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_OK)
+                .time(lessThan(5000L))
+                .extract()
+                .response());
     }
 
 }

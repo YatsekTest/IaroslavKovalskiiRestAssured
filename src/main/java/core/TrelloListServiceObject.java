@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import static constants.Tags.*;
+import static org.hamcrest.Matchers.lessThan;
 
 public class TrelloListServiceObject extends TrelloBaseServiceObject {
 
@@ -70,18 +71,18 @@ public class TrelloListServiceObject extends TrelloBaseServiceObject {
         }
     }
 
-    public static TrelloList getTrelloList(Response response) {
+    public static TrelloList getTrelloListFromResponse(Response response) {
         return new Gson().fromJson(response.asString().trim(), new TypeToken<TrelloList>() {
         }.getType());
     }
 
-    public static List<TrelloList> getTrelloLists(Response response) {
+    public static List<TrelloList> getTrelloListsFromResponse(Response response) {
         return new Gson().fromJson(response.asString().trim(), new TypeToken<List<TrelloList>>() {
         }.getType());
     }
 
     public static TrelloList createDefaultList(String idBoard) {
-        return getTrelloList(listRequestBuilder()
+        return getTrelloListFromResponse(listRequestBuilder()
                 .setMethod(Method.POST)
                 .setName(RandomStringUtils.randomAlphabetic(3, 7))
                 .setIdBoard(idBoard)
@@ -90,6 +91,7 @@ public class TrelloListServiceObject extends TrelloBaseServiceObject {
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_OK)
+                .time(lessThan(5000L))
                 .extract()
                 .response());
     }
