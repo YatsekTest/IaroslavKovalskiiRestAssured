@@ -4,7 +4,6 @@ import constants.Endpoints;
 import core.TrelloListServiceObject;
 import io.restassured.http.Method;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -31,9 +30,9 @@ public class TrelloCardTest extends TrelloBaseTest {
                 .sendRequest(Endpoints.CARDS + cardId)
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                .response());
+                .spec(correctResponseSpecification())
+                .extract().response());
+
         assertThat(updatedCard.getId(), equalTo(cardId));
         assertThat(updatedCard.getName(), equalTo(randomName));
         assertThat(updatedCard.getDesc(), equalTo(randomDesc));
@@ -51,8 +50,7 @@ public class TrelloCardTest extends TrelloBaseTest {
                 .sendRequest(Endpoints.CARDS + secondCard.getId())
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.SC_OK)
-                .time(lessThan(5000L))
+                .spec(correctResponseSpecification())
                 .extract().response());
         List<TrelloList> trelloLists = TrelloListServiceObject
                 .getTrelloListsFromResponse(TrelloListServiceObject
@@ -63,8 +61,7 @@ public class TrelloCardTest extends TrelloBaseTest {
                         .sendRequest(Endpoints.LISTS_CARDS)
                         .then()
                         .assertThat()
-                        .statusCode(HttpStatus.SC_OK)
-                        .time(lessThan(5000L))
+                        .spec(correctResponseSpecification())
                         .extract().response());
 
         assertThat(trelloLists, hasSize(1));

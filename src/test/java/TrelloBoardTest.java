@@ -1,14 +1,13 @@
 import beans.TrelloBoard;
 import constants.Endpoints;
-import io.restassured.http.ContentType;
 import io.restassured.http.Method;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 
 import static core.TrelloBoardServiceObject.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 
 public class TrelloBoardTest extends TrelloBaseTest {
 
@@ -25,9 +24,7 @@ public class TrelloBoardTest extends TrelloBaseTest {
                 .setId(boardId)
                 .buildRequest().sendRequest(Endpoints.BOARDS + boardId)
                 .then().assertThat()
-                .statusCode(HttpStatus.SC_OK)
-                .contentType(ContentType.JSON)
-                .time(lessThan(1000L))
+                .spec(correctResponseSpecification())
                 .extract().response());
 
         assertThat(actualBoard, is(expectedBoard));
@@ -45,8 +42,7 @@ public class TrelloBoardTest extends TrelloBaseTest {
                 .sendRequest(Endpoints.BOARDS + boardId)
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.SC_OK)
-                .time(lessThan(1000L))
+                .spec(correctResponseSpecification())
                 .extract().response());
 
         assertThat(updatedBoard.getId(), is(boardId));

@@ -2,10 +2,13 @@ package core;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
+import org.apache.http.HttpStatus;
 import testData.DataFromPropertiesFile;
 
 import java.util.Map;
@@ -13,6 +16,7 @@ import java.util.Map;
 import static constants.DataFilePath.AUTH_DATA_FILE_PATH;
 import static constants.Endpoints.BASE_URL;
 import static constants.Tags.*;
+import static org.hamcrest.Matchers.*;
 
 public class TrelloBaseServiceObject {
 
@@ -47,6 +51,14 @@ public class TrelloBaseServiceObject {
                 .setContentType(ContentType.JSON)
                 .setAccept(ContentType.JSON)
                 .setBaseUri(BASE_URL)
+                .build();
+    }
+
+    public static ResponseSpecification correctResponseSpecification() {
+        return new ResponseSpecBuilder()
+                .expectContentType(ContentType.JSON)
+                .expectStatusCode(HttpStatus.SC_OK)
+                .expectResponseTime(lessThan(5000L))
                 .build();
     }
 

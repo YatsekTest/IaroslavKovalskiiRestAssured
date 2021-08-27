@@ -64,10 +64,8 @@ public class TrelloListTest extends TrelloBaseTest {
                 .sendRequest(Endpoints.LISTS + trelloList.getId())
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.SC_OK)
-                .time(lessThan(5000L))
-                .extract()
-                .response());
+                .spec(correctResponseSpecification())
+                .extract().response());
 
         assertThat(updatedTrelloList.getId(), is(trelloList.getId()));
         assertThat(updatedTrelloList.getName(), not(trelloList.getName()));
