@@ -36,17 +36,17 @@ public class TrelloBoardServiceObject extends TrelloBaseServiceObject {
         }
 
         public boardRequestBuilder setId(String boardId) {
-            parameters.put(ID.tag, boardId);
+            parameters.put(ID.getTag(), boardId);
             return this;
         }
 
         public boardRequestBuilder setName(String name) {
-            parameters.put(NAME.tag, name);
+            parameters.put(NAME.getTag(), name);
             return this;
         }
 
         public boardRequestBuilder setDescription(String description) {
-            parameters.put(DESCRIPTION.tag, description);
+            parameters.put(DESCRIPTION.getTag(), description);
             return this;
         }
 

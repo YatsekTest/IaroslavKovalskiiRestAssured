@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.*;
 public class TrelloCardTest extends TrelloBaseTest {
 
     @Test
-    public void checkCardUpdate() {
+    public void cardUpdateTest() {
         TrelloList trelloList = TrelloListServiceObject.createDefaultList(boardId);
         TrelloCard trelloCard = createDefaultCard(boardId, trelloList.getId());
         String cardId = trelloCard.getId();
@@ -38,11 +38,15 @@ public class TrelloCardTest extends TrelloBaseTest {
         assertThat(updatedCard.getDesc(), equalTo(randomDesc));
     }
 
-    @Test
-    public void checkCardIsClosed() {
+    @Test(testName = "When one of two cards in list is closed, then list size equals 1.")
+    public void whenOneOfTwoCardsInListIsClosedThenListSizeEqualsOne() {
         TrelloList trelloList = TrelloListServiceObject.createDefaultList(boardId);
         TrelloCard firstCard = createDefaultCard(boardId, trelloList.getId());
         TrelloCard secondCard = createDefaultCard(boardId, trelloList.getId());
+        List<TrelloList> trelloLists = getTrelloLists(trelloList);
+
+        assertThat(trelloLists, hasSize(2));
+
         TrelloCard secondCardClosed = getTrelloCardFromResponse(cardRequestBuilder()
                 .setMethod(Method.PUT)
                 .setClosed(true)
@@ -52,17 +56,8 @@ public class TrelloCardTest extends TrelloBaseTest {
                 .assertThat()
                 .spec(correctResponseSpecification())
                 .extract().response());
-        List<TrelloList> trelloLists = TrelloListServiceObject
-                .getTrelloListsFromResponse(TrelloListServiceObject
-                        .listRequestBuilder()
-                        .setMethod(Method.GET)
-                        .setListId(trelloList.getId())
-                        .buildRequest()
-                        .sendRequest(Endpoints.LISTS_CARDS)
-                        .then()
-                        .assertThat()
-                        .spec(correctResponseSpecification())
-                        .extract().response());
+
+        trelloLists = getTrelloLists(trelloList);
 
         assertThat(trelloLists, hasSize(1));
         assertThat(trelloLists.get(0).getId(), is(firstCard.getId()));
@@ -70,6 +65,19 @@ public class TrelloCardTest extends TrelloBaseTest {
         assertThat(trelloLists.get(0).getName(), is(firstCard.getName()));
         assertThat(secondCardClosed.getClosed(), is(true));
         assertThat(secondCardClosed.getId(), is(secondCard.getId()));
+    }
+
+    private List<TrelloList> getTrelloLists(TrelloList trelloList) {
+        return TrelloListServiceObject
+                .getTrelloListsFromResponse(TrelloListServiceObject
+                        .listRequestBuilder()
+                        .setListId(trelloList.getId())
+                        .buildRequest()
+                        .sendRequest(Endpoints.LISTS_CARDS)
+                        .then()
+                        .assertThat()
+                        .spec(correctResponseSpecification())
+                        .extract().response());
     }
 
 }

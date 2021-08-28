@@ -37,32 +37,32 @@ public class TrelloListServiceObject extends TrelloBaseServiceObject {
         }
 
         public ListRequestBuilder setName(String name) {
-            parameters.put(NAME.tag, name);
+            parameters.put(NAME.getTag(), name);
             return this;
         }
 
         public ListRequestBuilder setId(String id) {
-            parameters.put(ID.tag, id);
+            parameters.put(ID.getTag(), id);
             return this;
         }
 
         public ListRequestBuilder setClosed(Boolean isClosed) {
-            parameters.put(CLOSED.tag, isClosed.toString());
+            parameters.put(CLOSED.getTag(), isClosed.toString());
             return this;
         }
 
         public ListRequestBuilder setIdBoard(String idBoard) {
-            parameters.put(ID_BOARD.tag, idBoard);
+            parameters.put(ID_BOARD.getTag(), idBoard);
             return this;
         }
 
         public ListRequestBuilder setBoardId(String boardId) {
-            path.put(ID.tag, boardId);
+            path.put(ID.getTag(), boardId);
             return this;
         }
 
         public ListRequestBuilder setListId(String listId) {
-            path.put(ID.tag, listId);
+            path.put(ID.getTag(), listId);
             return this;
         }
 

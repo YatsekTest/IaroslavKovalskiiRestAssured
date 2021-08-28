@@ -19,7 +19,6 @@ public class TrelloListTest extends TrelloBaseTest {
     public void checkDefaultListsNames(Object[] listNames) {
 
         List<TrelloList> listCards = getTrelloListsFromResponse(listRequestBuilder()
-                .setMethod(Method.GET)
                 .setBoardId(boardId)
                 .buildRequest()
                 .sendRequest(Endpoints.BOARDS_LISTS)
@@ -42,7 +41,7 @@ public class TrelloListTest extends TrelloBaseTest {
     }
 
     @Test
-    public void checkListCreate() {
+    public void listCreateTest() {
         TrelloList actualList = createDefaultList(boardId);
         TrelloList expectedList = new TrelloList();
         expectedList.setId(actualList.getId());
@@ -54,7 +53,7 @@ public class TrelloListTest extends TrelloBaseTest {
     }
 
     @Test
-    public void checkListNameUpdate() {
+    public void listNameUpdateTest() {
         TrelloList trelloList = createDefaultList(boardId);
         String newListName = RandomStringUtils.randomAlphabetic(3, 7);
         TrelloList updatedTrelloList = getTrelloListFromResponse(listRequestBuilder()

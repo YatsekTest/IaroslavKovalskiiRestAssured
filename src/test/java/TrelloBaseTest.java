@@ -31,7 +31,6 @@ public class TrelloBaseTest {
                 .sendRequest(Endpoints.BOARDS + boardId);
         TrelloBoardServiceObject
                 .boardRequestBuilder()
-                .setMethod(Method.GET)
                 .buildRequest()
                 .sendRequest(Endpoints.BOARDS + boardId)
                 .then()

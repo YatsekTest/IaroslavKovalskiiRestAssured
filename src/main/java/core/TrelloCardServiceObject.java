@@ -36,37 +36,37 @@ public class TrelloCardServiceObject extends TrelloBaseServiceObject {
         }
 
         public CardRequestBuilder setId(String id) {
-            parameters.put(ID.tag, id);
+            parameters.put(ID.getTag(), id);
             return this;
         }
 
         public CardRequestBuilder setClosed(Boolean isClosed) {
-            parameters.put(CLOSED.tag, isClosed.toString());
+            parameters.put(CLOSED.getTag(), isClosed.toString());
             return this;
         }
 
         public CardRequestBuilder setDesc(String desc) {
-            parameters.put(DESCRIPTION.tag, desc);
+            parameters.put(DESCRIPTION.getTag(), desc);
             return this;
         }
 
         public CardRequestBuilder setIdBoard(String idBoard) {
-            parameters.put(ID_BOARD.tag, idBoard);
+            parameters.put(ID_BOARD.getTag(), idBoard);
             return this;
         }
 
         public CardRequestBuilder setIdList(String idList) {
-            parameters.put(ID_LIST.tag, idList);
+            parameters.put(ID_LIST.getTag(), idList);
             return this;
         }
 
         public CardRequestBuilder setName(String name) {
-            parameters.put(NAME.tag, name);
+            parameters.put(NAME.getTag(), name);
             return this;
         }
 
         public CardRequestBuilder setSubscribed(Boolean isSubscribed) {
-            parameters.put(SUBSCRIBED.tag, isSubscribed.toString());
+            parameters.put(SUBSCRIBED.getTag(), isSubscribed.toString());
             return this;
         }
 

@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.not;
 public class TrelloBoardTest extends TrelloBaseTest {
 
     @Test
-    public void checkGetBoardById() {
+    public void getBoardByIdTest() {
         TrelloBoard expectedBoard = new TrelloBoard();
         expectedBoard.setId(boardId);
         expectedBoard.setName(defaultTrelloBoard.getName());
@@ -20,7 +20,6 @@ public class TrelloBoardTest extends TrelloBaseTest {
         expectedBoard.setClosed(false);
 
         TrelloBoard actualBoard = getTrelloBoardFromResponse(boardRequestBuilder()
-                .setMethod(Method.GET)
                 .setId(boardId)
                 .buildRequest().sendRequest(Endpoints.BOARDS + boardId)
                 .then().assertThat()
@@ -31,7 +30,7 @@ public class TrelloBoardTest extends TrelloBaseTest {
     }
 
     @Test
-    public void checkBoardUpdate() {
+    public void boardUpdateTest() {
         String newName = RandomStringUtils.randomAlphabetic(3, 7);
         String newDesc = RandomStringUtils.randomAlphabetic(10, 30);
         TrelloBoard updatedBoard = getTrelloBoardFromResponse(boardRequestBuilder()

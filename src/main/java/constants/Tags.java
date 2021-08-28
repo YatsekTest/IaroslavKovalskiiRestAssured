@@ -12,7 +12,11 @@ public enum Tags {
     SUBSCRIBED("subscribed"),
     ID_LIST("idList");
 
-    public String tag;
+    private String tag;
+
+    public String getTag() {
+        return tag;
+    }
 
     Tags(String tag) {
         this.tag = tag;
