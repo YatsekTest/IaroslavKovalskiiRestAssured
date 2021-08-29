@@ -26,8 +26,8 @@ public class TrelloBoardServiceObject extends TrelloBaseServiceObject {
     }
 
     public static class boardRequestBuilder {
-        private Map<String, String> parameters = new HashMap<>();
-        private Map<String, String> path = new HashMap<>();
+        private final Map<String, String> parameters = new HashMap<>();
+        private final Map<String, String> path = new HashMap<>();
         private Method requestMethod = Method.GET;
 
         public boardRequestBuilder setMethod(Method method) {
@@ -69,8 +69,7 @@ public class TrelloBoardServiceObject extends TrelloBaseServiceObject {
                 .sendRequest(Endpoints.BOARDS)
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.SC_OK)
-                .time(lessThan(5000L))
+                .spec(correctResponseSpecification())
                 .extract()
                 .response());
     }

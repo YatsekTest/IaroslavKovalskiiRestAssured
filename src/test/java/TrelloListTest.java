@@ -4,9 +4,10 @@ import io.restassured.http.Method;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
-import testData.ListDataProvider;
+import testData.TrelloDataProvider;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static core.TrelloListServiceObject.*;
@@ -15,8 +16,8 @@ import static org.hamcrest.Matchers.*;
 
 public class TrelloListTest extends TrelloBaseTest {
 
-    @Test(dataProviderClass = ListDataProvider.class, dataProvider = "defaultListNames")
-    public void checkDefaultListsNames(Object[] listNames) {
+    @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "defaultListNames")
+    public void defaultListsNamesTest(String[] listNames) {
 
         List<TrelloList> listCards = getTrelloListsFromResponse(listRequestBuilder()
                 .setBoardId(boardId)
@@ -33,9 +34,7 @@ public class TrelloListTest extends TrelloBaseTest {
         }
 
         List<String> expectedListNames = new ArrayList<>();
-        for (Object o : listNames) {
-            expectedListNames.add(o.toString());
-        }
+        Collections.addAll(expectedListNames, listNames);
 
         assertThat(actualListNames, is(expectedListNames));
     }

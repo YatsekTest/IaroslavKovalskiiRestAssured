@@ -5,6 +5,7 @@ import core.TrelloListServiceObject;
 import io.restassured.http.Method;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.Test;
+import testData.TrelloDataProvider;
 
 import java.util.List;
 
@@ -13,6 +14,25 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class TrelloCardTest extends TrelloBaseTest {
+
+    @Test(dataProviderClass = TrelloDataProvider.class, dataProvider = "cardNames")
+    public void createThreeCardsTest(String cardName) {
+        TrelloList trelloList = TrelloListServiceObject.createDefaultList(boardId);
+        TrelloCard trelloCard = getTrelloCardFromResponse(cardRequestBuilder()
+                .setMethod(Method.POST)
+                .setIdBoard(boardId)
+                .setIdList(trelloList.getId())
+                .setName(cardName)
+                .buildRequest()
+                .sendRequest(Endpoints.CARDS)
+                .then()
+                .assertThat()
+                .spec(correctResponseSpecification())
+                .extract().response());
+
+        assertThat(trelloCard.getName(), is(cardName));
+    }
+
 
     @Test
     public void cardUpdateTest() {

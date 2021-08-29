@@ -27,8 +27,8 @@ public class TrelloListServiceObject extends TrelloBaseServiceObject {
     }
 
     public static class ListRequestBuilder {
-        private Map<String, String> parameters = new HashMap<>();
-        private Map<String, String> path = new HashMap<>();
+        private final Map<String, String> parameters = new HashMap<>();
+        private final Map<String, String> path = new HashMap<>();
         private Method requestMethod = Method.GET;
 
         public ListRequestBuilder setMethod(Method method) {
@@ -90,8 +90,7 @@ public class TrelloListServiceObject extends TrelloBaseServiceObject {
                 .sendRequest(Endpoints.LISTS)
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.SC_OK)
-                .time(lessThan(5000L))
+                .spec(correctResponseSpecification())
                 .extract()
                 .response());
     }

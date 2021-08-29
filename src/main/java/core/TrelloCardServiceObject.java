@@ -26,8 +26,8 @@ public class TrelloCardServiceObject extends TrelloBaseServiceObject {
     }
 
     public static class CardRequestBuilder {
-        private Map<String, String> parameters = new HashMap<>();
-        private Map<String, String> path = new HashMap<>();
+        private final Map<String, String> parameters = new HashMap<>();
+        private final Map<String, String> path = new HashMap<>();
         private Method requestMethod = Method.GET;
 
         public CardRequestBuilder setMethod(Method method) {
@@ -93,8 +93,7 @@ public class TrelloCardServiceObject extends TrelloBaseServiceObject {
                 .sendRequest(Endpoints.CARDS)
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.SC_OK)
-                .time(lessThan(5000L))
+                .spec(correctResponseSpecification())
                 .extract()
                 .response());
     }
