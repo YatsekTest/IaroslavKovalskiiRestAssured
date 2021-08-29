@@ -34,9 +34,9 @@ public class TrelloBaseServiceObject {
 
     public Response sendRequest(String endpoint) {
         parameters.put(KEY.getTag(),
-                DataFromPropertiesFile.getData(AUTH_DATA_FILE_PATH).getProperty(API_KEY.getTag()));
+                DataFromPropertiesFile.getData().getProperty(API_KEY.getTag()));
         parameters.put(TOKEN.getTag(),
-                DataFromPropertiesFile.getData(AUTH_DATA_FILE_PATH).getProperty(TOKEN.getTag()));
+                DataFromPropertiesFile.getData().getProperty(TOKEN.getTag()));
         return RestAssured
                 .given(requestSpecification())
                 .log().all()

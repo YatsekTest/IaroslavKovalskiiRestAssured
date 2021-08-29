@@ -59,7 +59,7 @@ public class TrelloCardTest extends TrelloBaseTest {
     }
 
     @Test(testName = "When one of two cards in list is closed, then list size equals 1.")
-    public void whenOneOfTwoCardsInListIsClosedThenListSizeEqualsOne() {
+    public void cardInListIsClosedTest() {
         TrelloList trelloList = TrelloListServiceObject.createDefaultList(boardId);
         TrelloCard firstCard = createDefaultCard(boardId, trelloList.getId());
         TrelloCard secondCard = createDefaultCard(boardId, trelloList.getId());

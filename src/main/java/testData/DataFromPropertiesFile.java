@@ -5,21 +5,25 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import static constants.DataFilePath.AUTH_DATA_FILE_PATH;
+
 public class DataFromPropertiesFile {
 
     private static Properties data;
 
-    public static Properties getData(String dataFilePath) {
-        try (FileInputStream fileInputStream = new FileInputStream(dataFilePath)) {
+    static {
+        try (FileInputStream fileInputStream = new FileInputStream(AUTH_DATA_FILE_PATH)) {
             data = new Properties();
             data.load(fileInputStream);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Data file not found.");
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Data can't be loaded.");
         }
-        return data;
     }
 
+    public static Properties getData() {
+        return data;
+    }
 }
